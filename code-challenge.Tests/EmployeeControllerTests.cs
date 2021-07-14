@@ -90,6 +90,22 @@ namespace code_challenge.Tests.Integration
         }
 
         [TestMethod]
+        public void GetReports_Returns_Ok()
+        {
+            //Arrange
+            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
+
+            //Execute
+            var getRequestTask = _httpClient.GetAsync($"api/employee/getReports/{employeeId}");
+            var response = getRequestTask.Result;
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            Assert.AreEqual(4, reportingStructure.numberOfReports);
+        }
+
+        [TestMethod]
         public void UpdateEmployee_Returns_Ok()
         {
             // Arrange
